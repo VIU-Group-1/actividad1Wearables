@@ -3,6 +3,7 @@ package com.viu.actividad1.views.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
@@ -10,7 +11,12 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -70,7 +76,7 @@ fun TripRow(trip: Trip) {
         }
         Column(
             modifier = Modifier
-                .weight(0.7f)
+                .weight(0.5f)
                 .padding(16.dp)
         ) {
             Text(
@@ -88,6 +94,34 @@ fun TripRow(trip: Trip) {
                 modifier = Modifier.padding(top = 4.dp)
             )
 
+        }
+        if(!trip.completed) {
+            Column(
+                modifier = Modifier
+                    .weight(0.2f)
+                    .padding(16.dp)
+                    .fillMaxHeight()
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.End,
+                verticalArrangement = Arrangement.Center
+            ) {
+
+                IconButton(
+                    modifier = Modifier.size(28.dp),
+                    onClick = {
+                        print("Editar viaje: ${trip.title}")
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = "Editar viaje",
+                        modifier = Modifier.size(28.dp),
+                        tint = textColor
+                    )
+                }
+
+
+            }
         }
 
     }

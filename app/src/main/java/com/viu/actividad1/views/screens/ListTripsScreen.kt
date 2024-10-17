@@ -37,13 +37,16 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.compose.surfaceContainerLight
 import com.example.compose.tertiaryLight
 import com.viu.actividad1.R
+import com.viu.actividad1.data.repository.TripRepository
 import com.viu.actividad1.views.components.SegmentedButtons
 import com.viu.actividad1.views.components.TripRow
 import com.viu.actividad1.views.viewmodels.TripListViewModel
@@ -114,3 +117,4 @@ fun formatDate(date: java.util.Date): String {
     val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
     return dateFormat.format(date)
 }
+
