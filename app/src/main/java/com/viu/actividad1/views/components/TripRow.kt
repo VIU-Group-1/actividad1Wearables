@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
@@ -38,6 +39,7 @@ import com.example.compose.tertiaryLight
 import com.viu.actividad1.domain.model.Trip
 import com.viu.actividad1.views.screens.formatDate
 
+//Composable correspondiente a cada fila de la pantalla inicial
 @Composable
 fun TripRow(trip: Trip) {
     //Cambiar background y colores si está completado el viaje
@@ -78,9 +80,12 @@ fun TripRow(trip: Trip) {
             modifier = Modifier
                 .weight(0.5f)
                 .padding(16.dp)
+
         ) {
             Text(
                 text = trip.title,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
                 style = TextStyle(
                     color = textColor,
                     fontWeight = FontWeight.Bold,
