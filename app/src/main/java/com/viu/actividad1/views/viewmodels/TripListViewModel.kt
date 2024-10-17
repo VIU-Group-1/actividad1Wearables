@@ -7,6 +7,7 @@ import com.viu.actividad1.domain.TripEntity
 import androidx.compose.runtime.State
 import androidx.lifecycle.viewModelScope
 import com.viu.actividad1.data.DAO.TripDao
+import com.viu.actividad1.data.repository.TripRepository
 import com.viu.actividad1.domain.model.Trip
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
@@ -15,15 +16,15 @@ import kotlinx.coroutines.launch
 import java.sql.Date
 
 // View model para la lista de viajes
-class TripListViewModel(val dao: TripDao): ViewModel() {
+class TripListViewModel(val repository: TripRepository): ViewModel() {
     private val _trips: MutableState<List<Trip>> = mutableStateOf(emptyList());
     var tripsVM: State<List<Trip>> = _trips;
 
     var job: Job? = null;
     init{
         viewModelScope.launch {
-            dao.deleteAllTrips();
-            dao.insertTrip(
+            repository.deleteAllTrips();
+            repository.insertTrip(
                 TripEntity(
                     title = "Escapada a la Ciudad",
                     city = "Tokio",
@@ -36,7 +37,7 @@ class TripListViewModel(val dao: TripDao): ViewModel() {
                     completed = false
                 )
             )
-            dao.insertTrip(
+            repository.insertTrip(
                 TripEntity(
                     title = "Escapada a la Ciudad",
                     city = "Tokio",
@@ -46,11 +47,11 @@ class TripListViewModel(val dao: TripDao): ViewModel() {
                     description = "Una semana explorando la vibrante ciudad de Tokio.",
                     photoUrl = "https://elhype.com/wp-content/uploads/2020/01/tokyo-lifestyle-arquitectura-elhype-c-690x450.jpg",
                     cost = 1800.00,
-                    completed = false
+                    completed = true
                 )
             )
 
-            dao.insertTrip(
+            repository.insertTrip(
                 TripEntity(
                     title = "Exploración Cultural",
                     city = "París",
@@ -64,7 +65,7 @@ class TripListViewModel(val dao: TripDao): ViewModel() {
                 )
             )
 
-            dao.insertTrip(
+            repository.insertTrip(
                 TripEntity(
                     title = "Aventura en las Montañas",
                     city = "Aspen",
@@ -78,7 +79,7 @@ class TripListViewModel(val dao: TripDao): ViewModel() {
                 )
             )
 
-            dao.insertTrip(
+            repository.insertTrip(
                 TripEntity(
                     title = "Aventura de Safari",
                     city = "Nairobi",
@@ -99,7 +100,7 @@ class TripListViewModel(val dao: TripDao): ViewModel() {
     private suspend fun loadTrips(pastEvents: Boolean): List<Trip>{
         job?.cancel()
 
-        job = dao.getAllTrips().onEach { trip ->
+        job = repository.getAllTrips().onEach { trip ->
             _trips.value = trip.map {
                 Trip.fromEntity(it);
             }

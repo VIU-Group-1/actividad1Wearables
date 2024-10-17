@@ -25,11 +25,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -38,6 +43,8 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.compose.surfaceContainerLight
 import com.example.compose.tertiaryLight
+import com.viu.actividad1.R
+import com.viu.actividad1.views.components.SegmentedButtons
 import com.viu.actividad1.views.components.TripRow
 import com.viu.actividad1.views.viewmodels.TripListViewModel
 import java.text.SimpleDateFormat
@@ -48,6 +55,9 @@ fun ListTripsScreen(
     navController: NavController,
     viewModel: TripListViewModel
 ) {
+    val options = listOf("Activos", "Realizados")
+    var selectedOption: String by remember { mutableStateOf(options[0]) };
+
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = { /*TODO*/ }) {
@@ -58,16 +68,16 @@ fun ListTripsScreen(
         Column(modifier = Modifier.padding(contentPadding),
                 horizontalAlignment = Alignment.CenterHorizontally
         ){
-            val trips = viewModel.tripsVM.value;
+            var trips = viewModel.getTrips(selectedOption != "Activos");
             Row(
                 modifier = Modifier
-                    .padding(10.dp) // Espaciado alrededor de la fila
-                    .fillMaxWidth(), // Asegura que el Row ocupe todo el ancho
-                verticalAlignment = Alignment.CenterVertically, // Centra verticalmente los elementos
-                horizontalArrangement = Arrangement.Center // Centra horizontalmente los elementos
+                    .padding(10.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "Mis viajes",
+                    text = stringResource(R.string.title),
                     style = TextStyle(
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
@@ -76,12 +86,19 @@ fun ListTripsScreen(
                 )
                 Icon(
                     imageVector = Icons.Default.Luggage,
-                    contentDescription = "Ícono de maleta",
+                    contentDescription = "Icono de maleta",
                     modifier = Modifier.size(24.dp),
                     tint = tertiaryLight
                 )
 
             }
+            SegmentedButtons(selectedOption = selectedOption,
+                options,
+                onOptionSelected = { newOption ->
+                    selectedOption = newOption
+                    trips = viewModel.getTrips(selectedOption != "Activos");
+                }
+            )
             LazyColumn(modifier = Modifier.padding(contentPadding)){
                 trips.forEach{ trip ->
                     item{

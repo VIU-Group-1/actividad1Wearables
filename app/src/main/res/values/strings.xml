@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">actividad1</string>
+    <string name="title">Mis viajes</string>
 </resources>

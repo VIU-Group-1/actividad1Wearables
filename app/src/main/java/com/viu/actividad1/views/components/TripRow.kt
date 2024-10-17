@@ -24,6 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.example.compose.inversePrimaryLight
+import com.example.compose.onPrimaryLight
+import com.example.compose.outlineLight
 import com.example.compose.primaryContainerLight
 import com.example.compose.surfaceContainerLight
 import com.example.compose.tertiaryLight
@@ -32,13 +34,18 @@ import com.viu.actividad1.views.screens.formatDate
 
 @Composable
 fun TripRow(trip: Trip) {
+    //Cambiar background si está completado el viaje
+    val backgroundColor = if (trip.completed) outlineLight else primaryContainerLight
+    val textColor = if (trip.completed) onPrimaryLight else tertiaryLight
+    val subtextColor = if (trip.completed) onPrimaryLight else Color.Gray
+
     Row(
     modifier = Modifier
     .height(100.dp)
     .fillMaxWidth() // Aseguramos que ocupe todo el ancho de la pantalla
     .padding(8.dp)
     .clip(RoundedCornerShape(16.dp))  // Esquinas redondeadas
-    .background(primaryContainerLight)
+    .background(backgroundColor)
 
     .clickable {
         print("Hola")
@@ -69,7 +76,7 @@ fun TripRow(trip: Trip) {
             Text(
                 text = trip.title,
                 style = TextStyle(
-                    color = tertiaryLight,
+                    color = textColor,
                     fontWeight = FontWeight.Bold,
                     fontSize = 17.sp
                 )
@@ -77,7 +84,7 @@ fun TripRow(trip: Trip) {
             Text(
                 text = "${formatDate(trip.departureDate)} - ${formatDate(trip.returnDate)}",
                 maxLines = 1,
-                style = TextStyle(fontSize = 12.sp, color = Color.Gray),
+                style = TextStyle(fontSize = 12.sp, color = subtextColor),
                 modifier = Modifier.padding(top = 4.dp)
             )
 
