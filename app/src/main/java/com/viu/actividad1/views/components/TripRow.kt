@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -30,11 +31,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
-import com.example.compose.inversePrimaryLight
 import com.example.compose.onPrimaryLight
 import com.example.compose.outlineLight
 import com.example.compose.primaryContainerLight
-import com.example.compose.surfaceContainerLight
 import com.example.compose.tertiaryLight
 import com.viu.actividad1.domain.model.Trip
 import com.viu.actividad1.views.screens.formatDate
@@ -126,6 +125,37 @@ fun TripRow(trip: Trip) {
                 }
 
 
+            }
+        }else {
+            Column(
+                modifier = Modifier
+                    .weight(0.2f)
+                    .padding(16.dp)
+                    .fillMaxHeight()
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.End,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Row(    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()){
+                    Text(
+                        text = trip.punctuation.toString(),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        style = TextStyle(
+                            color = textColor,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 28.sp
+                        )
+                    )
+                    Icon(
+                        imageVector = Icons.Default.Star,
+                        contentDescription = "Editar viaje",
+                        modifier = Modifier.size(28.dp),
+                        tint = textColor
+                    )
+                }
             }
         }
 

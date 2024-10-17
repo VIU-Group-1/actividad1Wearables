@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel;
 import com.viu.actividad1.domain.TripEntity
 import androidx.compose.runtime.State
 import androidx.lifecycle.viewModelScope
-import com.viu.actividad1.data.DAO.TripDao
 import com.viu.actividad1.data.repository.TripRepository
 import com.viu.actividad1.domain.model.Trip
 import kotlinx.coroutines.Job
@@ -34,7 +33,8 @@ class TripListViewModel(val repository: TripRepository): ViewModel() {
                     description = "Una semana explorando la vibrante ciudad de Tokio.",
                     photoUrl = "https://elhype.com/wp-content/uploads/2020/01/tokyo-lifestyle-arquitectura-elhype-c-690x450.jpg",
                     cost = 1800.00,
-                    completed = false
+                    completed = false,
+                    punctuation = null
                 )
             )
             repository.insertTrip(
@@ -47,7 +47,8 @@ class TripListViewModel(val repository: TripRepository): ViewModel() {
                     description = "Una semana explorando la vibrante ciudad de Tokio.",
                     photoUrl = "https://elhype.com/wp-content/uploads/2020/01/tokyo-lifestyle-arquitectura-elhype-c-690x450.jpg",
                     cost = 1800.00,
-                    completed = true
+                    completed = true,
+                    punctuation = 5
                 )
             )
 
@@ -61,7 +62,8 @@ class TripListViewModel(val repository: TripRepository): ViewModel() {
                     description = "Explorando el arte y la cultura de París.",
                     photoUrl = "https://media-cdn.tripadvisor.com/media/photo-c/1280x250/17/15/6d/d6/paris.jpg",
                     cost = 2500.00,
-                    completed = false
+                    completed = false,
+                    punctuation = null
                 )
             )
 
@@ -75,7 +77,8 @@ class TripListViewModel(val repository: TripRepository): ViewModel() {
                     description = "Senderismo y esquí en las hermosas montañas.",
                     photoUrl = "https://mediaim.expedia.com/destination/1/7654d3634dae6a17e5fc54fb7aaab3f0.jpg",
                     cost = 2000.00,
-                    completed = false
+                    completed = false,
+                    punctuation = null
                 )
             )
 
@@ -89,7 +92,8 @@ class TripListViewModel(val repository: TripRepository): ViewModel() {
                     description = "Experimenta la vida salvaje como nunca antes.",
                     photoUrl = "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/29/f3/b4/19/caption.jpg?w=500&h=400&s=1",
                     cost = 3000.00,
-                    completed = false
+                    completed = false,
+                    punctuation = null
                 )
             )
             _trips.value = loadTrips(false);
