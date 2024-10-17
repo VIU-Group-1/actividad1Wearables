@@ -34,7 +34,7 @@ import com.viu.actividad1.views.screens.formatDate
 
 @Composable
 fun TripRow(trip: Trip) {
-    //Cambiar background si está completado el viaje
+    //Cambiar background y colores si está completado el viaje
     val backgroundColor = if (trip.completed) outlineLight else primaryContainerLight
     val textColor = if (trip.completed) onPrimaryLight else tertiaryLight
     val subtextColor = if (trip.completed) onPrimaryLight else Color.Gray
