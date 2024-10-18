@@ -1,5 +1,7 @@
 package com.viu.actividad1.views.screens
 
+import android.app.DatePickerDialog
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
@@ -10,7 +12,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Luggage
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -30,7 +34,12 @@ import com.example.compose.tertiaryLight
 import com.viu.actividad1.R
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import com.viu.actividad1.domain.TripEntity
 import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 @Composable
@@ -90,19 +99,8 @@ fun NewTripScreen(
                 label = { Text("País") }
             )
 
-            var departureDate by remember { mutableStateOf(TextFieldValue("")) }
-            TextField(
-                value = departureDate,
-                onValueChange = { departureDate = it },
-                label = { Text("Fecha de comienzo") }
-            )
-
-            var returnDate by remember { mutableStateOf(TextFieldValue("")) }
-            TextField(
-                value = returnDate,
-                onValueChange = { returnDate = it },
-                label = { Text("Fecha de regreso") }
-            )
+            var departureDate = showCalendar("Fecha de comienzo");
+            var returnDate = showCalendar("Fecha de regreso");
 
             var description by remember { mutableStateOf(TextFieldValue("")) }
             TextField(
@@ -127,10 +125,10 @@ fun NewTripScreen(
 
             Spacer(modifier = Modifier.weight(1f))
             Button(
-                onClick = {/*
-                    var departureDateFormated: Long = tripFormatDate(departureDate);
-                    var returnDateFormated: String = tripFormatDate(returnDate);
-                    viewModel.AddTrip(title.text, city.text, country.text, departureDateFormated, returnDateFormated, description.text, photoUrl.text, cost.text.toDouble(), false, null)*/},
+                onClick = {
+                            viewModel.AddTrip(title.text, city.text, country.text, TripEntity.convertDateToLong(departureDate), TripEntity.convertDateToLong(returnDate), description.text, photoUrl.text, cost.text.toDouble(), false, null)
+                            navController.navigate(Screen.ListScreen.route)
+                          },
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
                 Text("Guardar viaje")
@@ -140,7 +138,57 @@ fun NewTripScreen(
     }
 }
 
-fun tripFormatDate(date: java.util.Date): String {
-    val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-    return dateFormat.format(date)
+@Composable
+fun showCalendar(text: String): Date {
+
+    // Date
+    var date: Date = Date()
+    var dateText by remember { mutableStateOf("DD/MM/yyyy") }
+    val context = LocalContext.current
+    val calendar = Calendar.getInstance()
+    val year = calendar.get(Calendar.YEAR)
+    val month = calendar.get(Calendar.MONTH)
+    val day = calendar.get(Calendar.DAY_OF_MONTH)
+    val datePickerDialog = DatePickerDialog(
+        context,
+        { _, selectedYear, selectedMonth, selectedDayOfMonth ->
+            val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val selectedDate = Calendar.getInstance()
+            selectedDate.set(selectedYear, selectedMonth, selectedDayOfMonth)
+            date = selectedDate.time;
+            dateText = sdf.format(selectedDate.time)
+        }, year, month, day
+    )
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(16.dp)
+    ) {
+        TextField(
+            value = TextFieldValue(dateText),
+            onValueChange = { },
+            label = { Text(text) },
+            readOnly = true,
+            modifier = Modifier
+                .weight(1f)
+                .clickable {
+                    datePickerDialog.show()
+                }
+        )
+
+        Spacer(modifier = Modifier.width(8.dp))
+
+        // Calendar Icon
+        IconButton(onClick = { datePickerDialog.show() }) {
+            Icon(
+                imageVector = Icons.Default.CalendarToday,
+                contentDescription = "Select Date",
+                tint = Color.Gray,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+    }
+    return date;
 }
+
+

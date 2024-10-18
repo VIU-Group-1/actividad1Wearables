@@ -63,7 +63,7 @@ fun ListTripsScreen(
 
     Scaffold(
         floatingActionButton = {
-            FloatingActionButton(onClick = { navController.navigate("new_trip_screen") }) {
+            FloatingActionButton(onClick = { navController.navigate(Screen.NewTripScreen.route) }) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "add")
             }
         },
