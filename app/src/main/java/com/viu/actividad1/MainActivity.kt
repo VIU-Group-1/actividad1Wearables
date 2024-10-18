@@ -27,7 +27,9 @@ import com.viu.actividad1.data.DAO.TripDao
 import com.viu.actividad1.data.TripDatabase
 import com.viu.actividad1.data.repository.TripRepository
 import com.viu.actividad1.views.screens.ListTripsScreen
+import com.viu.actividad1.views.screens.NewTripScreen
 import com.viu.actividad1.views.screens.Screen
+import com.viu.actividad1.views.viewmodels.NewTripViewModel
 import com.viu.actividad1.views.viewmodels.TripListViewModel
 
 class MainActivity : ComponentActivity() {
@@ -53,10 +55,15 @@ class MainActivity : ComponentActivity() {
                     ){
                         composable(Screen.ListScreen.route){
                             //Create viewmodel and dao
-
-                            val tripListViewModel = TripListViewModel(TripRepository( db.dao));
+                            val tripListViewModel = TripListViewModel(TripRepository(db.dao));
                             //Call list component
                             ListTripsScreen(navController,tripListViewModel);
+                        }
+                        composable(Screen.NewTripScreen.route){
+                            //Create viewmodel and dao
+                            val newTripViewModel = NewTripViewModel(TripRepository(db.dao));
+                            //Call list component
+                            NewTripScreen(navController,newTripViewModel);
                         }
                     }
                 }
