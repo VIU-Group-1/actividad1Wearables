@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Luggage
 import androidx.compose.material3.Icon
@@ -54,6 +55,24 @@ fun NewTripScreen(
         Column(modifier = Modifier.padding(contentPadding),
             horizontalAlignment = Alignment.CenterHorizontally
         ){
+            Row(
+                modifier = Modifier
+                    .padding(10.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.Top,
+                horizontalArrangement = Arrangement.Start
+            ){
+                Icon(
+                    imageVector = Icons.Default.ArrowBackIosNew,
+                    contentDescription = "Atrás",
+                    modifier = Modifier
+                        .size(24.dp)
+                        .clickable {
+                            navController.popBackStack()
+                        },
+                    tint = tertiaryLight
+                )
+            }
             Row(
                 modifier = Modifier
                     .padding(10.dp)
