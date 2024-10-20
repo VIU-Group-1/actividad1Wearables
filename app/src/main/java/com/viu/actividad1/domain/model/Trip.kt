@@ -4,6 +4,7 @@ import com.viu.actividad1.domain.TripEntity
 import java.util.Date;
 
 data class Trip(
+    val id: Int = 0,
     val title: String,
     val city: String,
     val country: String,
@@ -18,6 +19,7 @@ data class Trip(
     companion object {
         fun fromEntity(entity: TripEntity): Trip{
             return Trip(
+                id = entity.id,
                 title = entity.title,
                 departureDate = entity.getDepartureDateAsDate(),
                 returnDate = entity.getReturnDateAsDate(),

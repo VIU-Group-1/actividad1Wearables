@@ -30,17 +30,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.compose.onPrimaryLight
 import com.example.compose.outlineLight
 import com.example.compose.primaryContainerLight
 import com.example.compose.tertiaryLight
 import com.viu.actividad1.domain.model.Trip
+import com.viu.actividad1.views.screens.Screen
 import com.viu.actividad1.views.screens.formatDate
 
 //Composable correspondiente a cada fila de la pantalla inicial
 @Composable
-fun TripRow(trip: Trip) {
+fun TripRow(trip: Trip, navController: NavController) {
     //Cambiar background y colores si está completado el viaje
     val backgroundColor = if (trip.completed) outlineLight else primaryContainerLight
     val textColor = if (trip.completed) onPrimaryLight else tertiaryLight
@@ -113,6 +115,7 @@ fun TripRow(trip: Trip) {
                 IconButton(
                     modifier = Modifier.size(28.dp),
                     onClick = {
+                        navController.navigate(Screen.NewTripScreen.route + "/${trip.id}")
                         print("Editar viaje: ${trip.title}")
                     }
                 ) {

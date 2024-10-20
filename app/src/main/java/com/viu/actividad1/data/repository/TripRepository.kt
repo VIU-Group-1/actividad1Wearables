@@ -22,8 +22,8 @@ class TripRepository(private val tripDao: TripDao) {
     }
 
     // Actualizar un viaje existente
-    suspend fun updateTrip(tripEntity: TripEntity) {
-        tripDao.updateTrip(tripEntity)
+    suspend fun updateTrip(trip: TripEntity) {
+        tripDao.updateTrip(trip)
     }
 
     // Eliminar un viaje

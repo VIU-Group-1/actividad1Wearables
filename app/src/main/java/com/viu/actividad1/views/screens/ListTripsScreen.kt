@@ -47,6 +47,7 @@ import com.example.compose.surfaceContainerLight
 import com.example.compose.tertiaryLight
 import com.viu.actividad1.R
 import com.viu.actividad1.data.repository.TripRepository
+import com.viu.actividad1.domain.TripEntity
 import com.viu.actividad1.views.components.SegmentedButtons
 import com.viu.actividad1.views.components.TripRow
 import com.viu.actividad1.views.viewmodels.TripListViewModel
@@ -59,6 +60,7 @@ fun ListTripsScreen(
     viewModel: TripListViewModel
 ) {
     val options = listOf("Activos", "Realizados")
+    val tripToEdit: TripEntity?= null
     var selectedOption: String by remember { mutableStateOf(options[0]) };
 
     Scaffold(
@@ -105,7 +107,7 @@ fun ListTripsScreen(
             LazyColumn(modifier = Modifier.padding(contentPadding)){
                 trips.forEach{ trip ->
                     item{
-                        TripRow(trip)
+                        TripRow(trip, navController)
                     }
                 }
             }

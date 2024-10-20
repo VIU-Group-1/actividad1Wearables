@@ -27,7 +27,7 @@ interface TripDao {
 
     // Actualizar un viaje
     @Update
-    suspend fun updateTrip(tripEntity: TripEntity)
+    suspend fun updateTrip(trip: TripEntity)
 
     // Eliminar un viaje
     @Delete
