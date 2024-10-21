@@ -57,7 +57,7 @@ fun TripRow(trip: Trip, navController: NavController) {
     .background(backgroundColor)
 
     .clickable {
-        print("Hola")
+        navController.navigate(Screen.DetailsTripScreen.route + "/${trip.id}")
     },
     verticalAlignment = Alignment.CenterVertically
     ){

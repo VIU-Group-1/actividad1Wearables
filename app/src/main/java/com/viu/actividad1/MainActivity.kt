@@ -36,9 +36,11 @@ import com.viu.actividad1.data.TripDatabase
 import com.viu.actividad1.data.repository.TripRepository
 import com.viu.actividad1.domain.TripEntity
 import com.viu.actividad1.domain.model.Trip
+import com.viu.actividad1.views.screens.InfoDetailsScreen
 import com.viu.actividad1.views.screens.ListTripsScreen
 import com.viu.actividad1.views.screens.NewTripScreen
 import com.viu.actividad1.views.screens.Screen
+import com.viu.actividad1.views.viewmodels.InfoDetailsViewModel
 import com.viu.actividad1.views.viewmodels.NewTripViewModel
 import com.viu.actividad1.views.viewmodels.TripListViewModel
 import kotlinx.coroutines.launch
@@ -92,6 +94,18 @@ class MainActivity : ComponentActivity() {
                             val newTripViewModel = NewTripViewModel(TripRepository(db.dao));
                             //Call list component
                             NewTripScreen(navController,newTripViewModel);
+                        }
+                        composable("${Screen.DetailsTripScreen.route}/{tripId}",
+                            arguments = listOf(navArgument("tripId") { type = NavType.IntType})
+                        ) { backStackEntry->
+                            val tripId = backStackEntry.arguments?.getInt("tripId")
+
+                            //Create viewmodel and dao
+                            val infoDetailsViewModel = InfoDetailsViewModel(TripRepository(db.dao));
+                            //Call list component
+                            if (tripId != null) {
+                                InfoDetailsScreen(navController,tripId, infoDetailsViewModel)
+                            };
                         }
                     }
                 }

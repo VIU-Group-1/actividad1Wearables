@@ -3,4 +3,11 @@
     <string name="title">Mis viajes</string>
     <string name="newTrip">Crear viaje</string>
     <string name="editTrip">Editar viaje</string>
+    <string name="departureDate">Inicio viaje</string>
+    <string name="returnDate">Fin viaje</string>
+    <string name="description">Descripción</string>
+    <string name="cost">Coste</string>
+    <string name="done">Realizado</string>
+    <string name="cancel">Cancelar</string>
+    <string name="detailstitle">Detalles del viaje</string>
 </resources>
