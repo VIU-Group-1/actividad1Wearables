@@ -53,10 +53,10 @@ fun NewTripScreen(
     var showToast by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf("") }
     var departureDate by remember {
-        mutableStateOf(tripToEdit?.getDepartureDateAsDate() ?: Date())
+        mutableStateOf( Date())
     }
     var returnDate by remember {
-        mutableStateOf(tripToEdit?.getReturnDateAsDate() ?: Date())
+        mutableStateOf( Date())
     }
     var newDate by remember{
         mutableStateOf(tripToEdit?.getDepartureDateAsDate() ?: Date())
@@ -87,8 +87,11 @@ fun NewTripScreen(
                     tint = tertiaryLight
                 )
             }
-            tripToEdit?.let { trip ->
-                Text(text = "Editando:  ${trip.title}")            }
+            val titleResId = if (tripToEdit == null) {
+                R.string.newTrip
+            } else {
+                R.string.editTrip
+            }
             Row(
                 modifier = Modifier
                     .padding(10.dp)
@@ -97,12 +100,13 @@ fun NewTripScreen(
                 horizontalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = stringResource(R.string.newTrip),
+                    text = stringResource(id = titleResId),
                     style = TextStyle(
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         color = tertiaryLight
-                    )
+                    ),
+                    modifier = Modifier.padding(10.dp)
                 )
                 Icon(
                     imageVector = Icons.Default.Luggage,
@@ -116,8 +120,6 @@ fun NewTripScreen(
             var title by remember { mutableStateOf(TextFieldValue(tripToEdit?.title ?: "")) }
             var city by remember { mutableStateOf(TextFieldValue(tripToEdit?.city ?: "")) }
             var country by remember { mutableStateOf(TextFieldValue(tripToEdit?.country ?: "")) }
-            //var departureDate by remember { mutableStateOf(initialDepartureDate.clone() as Date) }
-            //var returnDate by remember { mutableStateOf(initialReturnDate.clone() as Date) }
             var description by remember { mutableStateOf(TextFieldValue(tripToEdit?.description ?: "")) }
             var photoUrl by remember { mutableStateOf(TextFieldValue(tripToEdit?.photoUrl ?: "")) }
             var cost by remember { mutableStateOf(TextFieldValue(tripToEdit?.cost.toString())) }
@@ -141,26 +143,30 @@ fun NewTripScreen(
                     returnDate = Date()
                 }
             }
-            val formattedDepartureDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(departureDate)
-            val formattedReturnDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(returnDate)
-            val formattedNewDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(newDate)
-            Text(text = "Fecha de comienzo: $formattedDepartureDate")
-            Text(text = "Fecha de regreso: $formattedReturnDate")
-            Text(text = "Fecha de newDate: $formattedNewDate")
+
             TextField(
                 value = title,
                 onValueChange = { title = it },
-                label = { Text("Título del viaje") }
+                label = { Text("Título del viaje") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 25.dp, vertical = 8.dp)
             )
             TextField(
                 value = city,
                 onValueChange = { city = it },
-                label = { Text("Ciudad") }
+                label = { Text("Ciudad") } ,
+                modifier = Modifier
+                        .fillMaxWidth()
+                    .padding(horizontal = 25.dp, vertical = 8.dp)
             )
             TextField(
                 value = country,
                 onValueChange = { country = it },
-                label = { Text("País") }
+                label = { Text("País") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 25.dp, vertical = 8.dp)
             )
             showCalendar("Fecha de comienzo", departureDate) { newDate ->
                 departureDate = newDate
@@ -171,17 +177,26 @@ fun NewTripScreen(
             TextField(
                 value = description,
                 onValueChange = { description = it },
-                label = { Text("Descripción") }
+                label = { Text("Descripción") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 25.dp, vertical = 8.dp)
             )
             TextField(
                 value = photoUrl,
                 onValueChange = { photoUrl = it },
-                label = { Text("Foto") }
+                label = { Text("Foto") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 25.dp, vertical = 8.dp)
             )
             TextField(
                 value = cost,
                 onValueChange = { cost = it },
-                label = { Text("Coste") }
+                label = { Text("Coste") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 25.dp, vertical = 8.dp)
             )
             Spacer(modifier = Modifier.weight(1f))
             Button(
@@ -240,9 +255,14 @@ fun showCalendar(text: String, selectedDate: Date, onDateSelected: (Date) -> Uni
     var dateText by remember { mutableStateOf(SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(selectedDate)) }
     val context = LocalContext.current
 
+    LaunchedEffect(selectedDate) {
+        date = selectedDate
+        dateText = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(selectedDate)
+    }
+
     val showDatePicker = {
         // Configura el calendario con la fecha seleccionada
-        val calendar = Calendar.getInstance().apply { time = selectedDate }
+        val calendar = Calendar.getInstance().apply { time = date }
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -273,20 +293,20 @@ fun showCalendar(text: String, selectedDate: Date, onDateSelected: (Date) -> Uni
             label = { Text(text) },
             readOnly = true,
             modifier = Modifier
-                .weight(1f)
-                .clickable { showDatePicker() } // Mostrar el DatePickerDialog
+                .fillMaxWidth()
+                .padding(horizontal = 25.dp, vertical = 8.dp)
+                //.weight(1f)
+                .clickable { showDatePicker() },
+            trailingIcon = {
+                IconButton(onClick = { showDatePicker() }) {
+                    Icon(
+                        imageVector = Icons.Default.CalendarToday,
+                        contentDescription = "Select Date",
+                        tint = Color.Gray,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+            }
         )
-
-        Spacer(modifier = Modifier.width(8.dp))
-
-        // Icono del calendario
-        IconButton(onClick = { showDatePicker() }) {
-            Icon(
-                imageVector = Icons.Default.CalendarToday,
-                contentDescription = "Select Date",
-                tint = Color.Gray,
-                modifier = Modifier.size(24.dp)
-            )
-        }
     }
 }

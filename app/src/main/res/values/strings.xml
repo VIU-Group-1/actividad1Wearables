@@ -2,4 +2,5 @@
     <string name="app_name">actividad1</string>
     <string name="title">Mis viajes</string>
     <string name="newTrip">Crear viaje</string>
+    <string name="editTrip">Editar viaje</string>
 </resources>
