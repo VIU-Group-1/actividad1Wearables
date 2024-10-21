@@ -285,7 +285,7 @@ fun showCalendar(text: String, selectedDate: Date, onDateSelected: (Date) -> Uni
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(16.dp)
+
     ) {
         TextField(
             value = dateText,
