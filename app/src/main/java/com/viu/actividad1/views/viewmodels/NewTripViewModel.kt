@@ -10,6 +10,7 @@ import com.viu.actividad1.domain.TripEntity
 import com.viu.actividad1.domain.model.InsertStatus
 import kotlinx.coroutines.launch
 
+// View model para la creacion de viajes
 class NewTripViewModel(val repository: TripRepository) : ViewModel() {
     private val _insertStatus = MutableLiveData<InsertStatus>()
     val insertStatus: LiveData<InsertStatus> get() = _insertStatus

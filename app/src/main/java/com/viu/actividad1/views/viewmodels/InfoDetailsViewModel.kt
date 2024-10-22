@@ -11,7 +11,7 @@ import com.viu.actividad1.domain.model.Trip
 import com.viu.actividad1.domain.model.UpdateStatus
 import kotlinx.coroutines.launch
 
-//View model para la pantalla de detalles de viajes
+//View model para la pantalla de detalles de cada viaje
 class InfoDetailsViewModel(private val repository: TripRepository) : ViewModel() {
     private val _updateStatus = MutableLiveData<UpdateStatus>()
     val updateStatus: LiveData<UpdateStatus> get() = _updateStatus

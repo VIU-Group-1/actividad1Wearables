@@ -40,6 +40,7 @@ import com.viu.actividad1.views.components.ShowCalendar
 import com.viu.actividad1.views.viewmodels.NewTripViewModel
 import java.util.Date
 
+// Pantalla para la creacion de los viajes
 @Composable
 fun NewTripScreen(
     navController: NavController,

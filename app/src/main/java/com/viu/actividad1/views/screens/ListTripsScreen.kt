@@ -37,6 +37,7 @@ import com.viu.actividad1.views.viewmodels.TripListViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 
+//Pantalla con la lista de todos los viajes
 @Composable
 fun ListTripsScreen(
     navController: NavController,

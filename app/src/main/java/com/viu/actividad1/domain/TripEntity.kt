@@ -4,7 +4,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.Date
 
-@Entity(tableName="trips")
+// Entidad para almacenar mediante la libreria Room los viajes en BD
+@Entity(tableName = "trips")
 data class TripEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val title: String,
@@ -17,7 +18,7 @@ data class TripEntity(
     val cost: Double,
     var completed: Boolean,
     val punctuation: Int?
-){
+) {
     // Convertir Long a Date
     fun getDepartureDateAsDate(): Date {
         return Date(departureDate)
@@ -27,6 +28,7 @@ data class TripEntity(
     fun getReturnDateAsDate(): Date {
         return Date(returnDate)
     }
+
     companion object {
         // Convertir Date a Long
         fun convertDateToLong(date: Date): Long {

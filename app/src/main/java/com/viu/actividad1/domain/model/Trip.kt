@@ -3,6 +3,7 @@ package com.viu.actividad1.domain.model;
 import com.viu.actividad1.domain.TripEntity
 import java.util.Date;
 
+// Modelo de un viaje
 data class Trip(
     val id: Int = 0,
     val title: String,
@@ -15,9 +16,9 @@ data class Trip(
     val cost: Double,
     val completed: Boolean,
     val punctuation: Int?
-){
+) {
     companion object {
-        fun fromEntity(entity: TripEntity): Trip{
+        fun fromEntity(entity: TripEntity): Trip {
             return Trip(
                 id = entity.id,
                 title = entity.title,

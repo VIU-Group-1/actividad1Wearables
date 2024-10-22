@@ -28,10 +28,19 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
+
+// Composable para mostrar el input del calendario
 @Composable
 fun ShowCalendar(text: String, selectedDate: Date, onDateSelected: (Date) -> Unit) {
     var date by remember { mutableStateOf(selectedDate) }
-    var dateText by remember { mutableStateOf(SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(selectedDate)) }
+    var dateText by remember {
+        mutableStateOf(
+            SimpleDateFormat(
+                "dd/MM/yyyy",
+                Locale.getDefault()
+            ).format(selectedDate)
+        )
+    }
     val context = LocalContext.current
 
     LaunchedEffect(selectedDate) {
