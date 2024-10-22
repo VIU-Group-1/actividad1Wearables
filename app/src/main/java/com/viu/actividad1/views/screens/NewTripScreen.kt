@@ -1,12 +1,8 @@
 package com.viu.actividad1.views.screens
 
-import android.app.DatePickerDialog
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
-import com.viu.actividad1.views.viewmodels.NewTripViewModel
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,66 +11,68 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
-import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Luggage
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.compose.tertiaryLight
 import com.viu.actividad1.R
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import com.viu.actividad1.domain.TripEntity
-import java.text.SimpleDateFormat
-import java.util.Calendar
+import com.viu.actividad1.views.components.ShowCalendar
+import com.viu.actividad1.views.viewmodels.NewTripViewModel
 import java.util.Date
-import java.util.Locale
 
 @Composable
 fun NewTripScreen(
     navController: NavController,
     viewModel: NewTripViewModel,
-    tripToEdit: TripEntity?= null
+    tripToEdit: TripEntity? = null
 ) {
     var showToast by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf("") }
     var departureDate by remember {
-        mutableStateOf( Date())
+        mutableStateOf(Date())
     }
     var returnDate by remember {
-        mutableStateOf( Date())
+        mutableStateOf(Date())
     }
-    var newDate by remember{
+    var newDate by remember {
         mutableStateOf(tripToEdit?.getDepartureDateAsDate() ?: Date())
     }
 
     Scaffold(
 
-    ){ contentPadding ->
+    ) { contentPadding ->
 
-        Column(modifier = Modifier.padding(contentPadding),
+        Column(
+            modifier = Modifier.padding(contentPadding),
             horizontalAlignment = Alignment.CenterHorizontally
-        ){
+        ) {
             Row(
                 modifier = Modifier
                     .padding(10.dp)
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.Top,
                 horizontalArrangement = Arrangement.Start
-            ){
+            ) {
                 Icon(
                     imageVector = Icons.Default.ArrowBackIosNew,
                     contentDescription = "Atrás",
@@ -119,7 +117,13 @@ fun NewTripScreen(
             var title by remember { mutableStateOf(TextFieldValue(tripToEdit?.title ?: "")) }
             var city by remember { mutableStateOf(TextFieldValue(tripToEdit?.city ?: "")) }
             var country by remember { mutableStateOf(TextFieldValue(tripToEdit?.country ?: "")) }
-            var description by remember { mutableStateOf(TextFieldValue(tripToEdit?.description ?: "")) }
+            var description by remember {
+                mutableStateOf(
+                    TextFieldValue(
+                        tripToEdit?.description ?: ""
+                    )
+                )
+            }
             var photoUrl by remember { mutableStateOf(TextFieldValue(tripToEdit?.photoUrl ?: "")) }
             var cost by remember { mutableStateOf(TextFieldValue(tripToEdit?.cost.toString())) }
             LaunchedEffect(tripToEdit) {
@@ -154,9 +158,9 @@ fun NewTripScreen(
             TextField(
                 value = city,
                 onValueChange = { city = it },
-                label = { Text("Ciudad") } ,
+                label = { Text("Ciudad") },
                 modifier = Modifier
-                        .fillMaxWidth()
+                    .fillMaxWidth()
                     .padding(horizontal = 25.dp, vertical = 8.dp)
             )
             TextField(
@@ -167,10 +171,10 @@ fun NewTripScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 25.dp, vertical = 8.dp)
             )
-            showCalendar("Fecha de comienzo", departureDate) { newDate ->
+            ShowCalendar("Fecha de comienzo", departureDate) { newDate ->
                 departureDate = newDate
             }
-            showCalendar("Fecha de regreso", returnDate) { newDate ->
+            ShowCalendar("Fecha de regreso", returnDate) { newDate ->
                 returnDate = newDate
             }
             TextField(
@@ -202,7 +206,7 @@ fun NewTripScreen(
                 onClick = {
                     val costValue = cost.text.toDoubleOrNull()
                     if (costValue != null) {
-                        if(tripToEdit == null) {
+                        if (tripToEdit == null) {
                             viewModel.addTrip(
                                 title.text,
                                 city.text,
@@ -215,8 +219,8 @@ fun NewTripScreen(
                                 false,
                                 null
                             )
-                        } else{
-                            viewModel.UpdateTrip(
+                        } else {
+                            viewModel.updateTrip(
                                 tripToEdit.id,
                                 title.text,
                                 city.text,
@@ -237,7 +241,7 @@ fun NewTripScreen(
                     }
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally)
-            ){
+            ) {
                 Text(if (tripToEdit == null) "Guardar viaje" else "Actualizar viaje")
             }
         }
@@ -245,67 +249,5 @@ fun NewTripScreen(
             Toast.makeText(LocalContext.current, errorMessage, Toast.LENGTH_SHORT).show()
             showToast = false
         }
-    }
-}
-
-@Composable
-fun showCalendar(text: String, selectedDate: Date, onDateSelected: (Date) -> Unit) {
-    var date by remember { mutableStateOf(selectedDate) }
-    var dateText by remember { mutableStateOf(SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(selectedDate)) }
-    val context = LocalContext.current
-
-    LaunchedEffect(selectedDate) {
-        date = selectedDate
-        dateText = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(selectedDate)
-    }
-
-    val showDatePicker = {
-        // Configura el calendario con la fecha seleccionada
-        val calendar = Calendar.getInstance().apply { time = date }
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)
-        val day = calendar.get(Calendar.DAY_OF_MONTH)
-
-        DatePickerDialog(
-            context,
-            { _, selectedYear, selectedMonth, selectedDayOfMonth ->
-                // Crea un nuevo calendario con la fecha seleccionada
-                val newDate = Calendar.getInstance().apply {
-                    set(selectedYear, selectedMonth, selectedDayOfMonth)
-                }.time
-
-                // Actualiza la fecha y el texto
-                date = newDate
-                dateText = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(newDate)
-                onDateSelected(newDate) // Llama al callback con la nueva fecha
-            }, year, month, day
-        ).show()
-    }
-
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-
-    ) {
-        TextField(
-            value = dateText,
-            onValueChange = {},
-            label = { Text(text) },
-            readOnly = true,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 25.dp, vertical = 8.dp)
-                //.weight(1f)
-                .clickable { showDatePicker() },
-            trailingIcon = {
-                IconButton(onClick = { showDatePicker() }) {
-                    Icon(
-                        imageVector = Icons.Default.CalendarToday,
-                        contentDescription = "Select Date",
-                        tint = Color.Gray,
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
-            }
-        )
     }
 }

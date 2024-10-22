@@ -1,38 +1,30 @@
 package com.viu.actividad1.views.screens
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
-import com.viu.actividad1.views.viewmodels.InfoDetailsViewModel
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,13 +41,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.compose.primaryLight
 import com.example.compose.tertiaryLight
 import com.viu.actividad1.R
-
 import com.viu.actividad1.domain.model.Trip
+import com.viu.actividad1.views.viewmodels.InfoDetailsViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -79,15 +71,23 @@ fun InfoDetailsScreen(
     Scaffold(
         topBar = {
             Row(
-                modifier = Modifier.padding(start = 16.dp, top= 2.dp),
+                modifier = Modifier.padding(start = 16.dp, top = 2.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = { navController.popBackStack() }) {
-                    Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Volver",tint = tertiaryLight)
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Volver",
+                        tint = tertiaryLight
+                    )
                 }
                 Text(
                     text = stringResource(R.string.detailstitle),
-                    style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold, color = tertiaryLight),
+                    style = TextStyle(
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = tertiaryLight
+                    ),
                 )
             }
         }
@@ -142,8 +142,11 @@ fun InfoDetailsScreen(
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Column(modifier = Modifier.padding(10.dp), verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally) {
+                        Column(
+                            modifier = Modifier.padding(10.dp),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
                             Text(
                                 text = stringResource(R.string.departureDate),
                                 style = TextStyle(
@@ -161,8 +164,11 @@ fun InfoDetailsScreen(
                                 )
                             )
                         }
-                        Column(modifier = Modifier.padding(10.dp), verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally) {
+                        Column(
+                            modifier = Modifier.padding(10.dp),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
                             Text(
                                 text = stringResource(R.string.returnDate),
                                 style = TextStyle(
@@ -182,13 +188,18 @@ fun InfoDetailsScreen(
                         }
                     }
 
-                    Row(modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 28.dp, end = 28.dp),
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 28.dp, end = 28.dp),
                         horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically) {
-                        Column(modifier = Modifier.padding(bottom = 10.dp), verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally) {
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(bottom = 10.dp),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
                             Text(
                                 text = stringResource(R.string.description),
                                 style = TextStyle(
@@ -208,12 +219,17 @@ fun InfoDetailsScreen(
                         }
                     }
 
-                    Row(modifier = Modifier
-                        .fillMaxWidth(),
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically) {
-                        Column(modifier = Modifier.padding(bottom = 10.dp), verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally) {
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(bottom = 10.dp),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
                             Text(
                                 text = stringResource(R.string.cost),
                                 style = TextStyle(
@@ -233,41 +249,55 @@ fun InfoDetailsScreen(
                         }
                     }
 
-                    Row(modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 22.dp, end = 22.dp),
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 22.dp, end = 22.dp),
                         horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically) {
-                            Button(
-                                onClick = {
-                                },
-                                colors = ButtonDefaults.buttonColors(containerColor = primaryLight),
-                                modifier = Modifier.padding(8.dp)
-                            ) {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Icon(imageVector = Icons.Filled.Check, contentDescription = "Tick", tint = Color.White) // Ícono de tick
-                                    Text(
-                                        text = stringResource(R.string.done),
-                                        modifier = Modifier.padding(start = 8.dp),
-                                        style = TextStyle(fontSize = 22.sp, color = Color.White) // Texto en blanco
-                                    )
-                                }
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Button(
+                            onClick = {
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = primaryLight),
+                            modifier = Modifier.padding(8.dp)
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(
+                                    imageVector = Icons.Filled.Check,
+                                    contentDescription = "Tick",
+                                    tint = Color.White
+                                ) // Ícono de tick
+                                Text(
+                                    text = stringResource(R.string.done),
+                                    modifier = Modifier.padding(start = 8.dp),
+                                    style = TextStyle(
+                                        fontSize = 22.sp,
+                                        color = Color.White
+                                    ) // Texto en blanco
+                                )
                             }
-                            Button(
-                                onClick = {
-                                    viewModel.showDeleteDialog()
-                                },
-                                colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
-                                modifier = Modifier.padding(8.dp)
-                            ) {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Icon(imageVector = Icons.Filled.Cancel, contentDescription = "Cancelar", tint = Color.White) // Ícono de cancelar
-                                    Text(
-                                        text = stringResource(R.string.cancel),
-                                        modifier = Modifier.padding(start = 8.dp),
-                                        style = TextStyle(fontSize = 22.sp, color = Color.White))
-                                }
+                        }
+                        Button(
+                            onClick = {
+                                viewModel.showDeleteDialog()
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
+                            modifier = Modifier.padding(8.dp)
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(
+                                    imageVector = Icons.Filled.Cancel,
+                                    contentDescription = "Cancelar",
+                                    tint = Color.White
+                                ) // Ícono de cancelar
+                                Text(
+                                    text = stringResource(R.string.cancel),
+                                    modifier = Modifier.padding(start = 8.dp),
+                                    style = TextStyle(fontSize = 22.sp, color = Color.White)
+                                )
                             }
+                        }
 
                     }
                 }
@@ -285,10 +315,10 @@ fun InfoDetailsScreen(
                 confirmButton = {
                     TextButton(
                         onClick = {
-                                viewModel.deleteTripById(trip!!.id)
-                                viewModel.hideDeleteDialog()
-                                Toast.makeText(context, "Viaje eliminado", Toast.LENGTH_SHORT).show()
-                                navController.popBackStack()
+                            viewModel.deleteTripById(trip!!.id)
+                            viewModel.hideDeleteDialog()
+                            Toast.makeText(context, "Viaje eliminado", Toast.LENGTH_SHORT).show()
+                            navController.popBackStack()
 
                         }
                     ) {
@@ -297,7 +327,7 @@ fun InfoDetailsScreen(
                 },
                 dismissButton = {
                     TextButton(
-                        onClick = { viewModel.hideDeleteDialog()  }
+                        onClick = { viewModel.hideDeleteDialog() }
                     ) {
                         Text(text = "Cancelar")
                     }
