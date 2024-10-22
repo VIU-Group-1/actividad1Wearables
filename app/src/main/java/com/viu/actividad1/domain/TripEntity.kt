@@ -15,7 +15,7 @@ data class TripEntity(
     val description: String,
     val photoUrl: String,
     val cost: Double,
-    val completed: Boolean,
+    var completed: Boolean,
     val punctuation: Int?
 ){
     // Convertir Long a Date

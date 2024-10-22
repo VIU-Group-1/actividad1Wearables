@@ -1,26 +1,20 @@
 package com.viu.actividad1.views.viewmodels
 
-import android.provider.ContactsContract.Intents.Insert
-import androidx.compose.runtime.State
+
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.viu.actividad1.data.repository.TripRepository
 import com.viu.actividad1.domain.TripEntity
-import com.viu.actividad1.domain.model.Trip
+import com.viu.actividad1.domain.model.InsertStatus
 import kotlinx.coroutines.launch
-import java.sql.Date
-sealed class InsertStatus {
-    object Success: InsertStatus()
-    data class Error (val message: String) : InsertStatus()
-}
 
 class NewTripViewModel(val repository: TripRepository): ViewModel() {
     private val _insertStatus = MutableLiveData<InsertStatus>()
     val insertStatus: LiveData<InsertStatus> get() = _insertStatus
 
-    fun AddTrip(title: String,
+    fun addTrip(title: String,
                 city: String,
                 country: String,
                 departureDate: Long,
@@ -47,7 +41,7 @@ class NewTripViewModel(val repository: TripRepository): ViewModel() {
                     punctuation = punctuation
                 )
                 repository.insertTrip(newTrip)
-                _insertStatus.value = InsertStatus.Success
+                _insertStatus.value = InsertStatus.Inserted("Viaje agregado correctamente")
             } catch (e: Exception){
                 _insertStatus.value = InsertStatus.Error("Eror al agregar el viaje: ${e.message}")
             }
@@ -85,7 +79,7 @@ class NewTripViewModel(val repository: TripRepository): ViewModel() {
                    punctuation = punctuation
                )
                 repository.updateTrip(updatedTrip)
-                _insertStatus.value = InsertStatus.Success
+                _insertStatus.value = InsertStatus.Inserted("Viaje insertado correctamente")
             } catch (e: Exception){
                 _insertStatus.value = InsertStatus.Error("Error al actualizar el viaje: ${e.message}")
             }

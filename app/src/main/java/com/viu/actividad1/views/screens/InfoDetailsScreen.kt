@@ -1,5 +1,7 @@
 package com.viu.actividad1.views.screens
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,13 +23,16 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,21 +42,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewModelScope
 import coil.compose.rememberAsyncImagePainter
 import com.example.compose.primaryLight
 import com.example.compose.tertiaryLight
 import com.viu.actividad1.R
-import com.viu.actividad1.domain.TripEntity
+
 import com.viu.actividad1.domain.model.Trip
 import java.text.SimpleDateFormat
 import java.util.Locale
 
+// Pantalla con los detalles de cada viaje
 @Composable
 fun InfoDetailsScreen(
     navController: NavController,
@@ -61,6 +69,7 @@ fun InfoDetailsScreen(
     var trip by remember { mutableStateOf<Trip?>(null) }
     var isLoading by remember { mutableStateOf(true) }
     val dateFormat = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
+    val context = LocalContext.current
 
     LaunchedEffect(id) {
         trip = viewModel.getTripById(id)
@@ -230,7 +239,8 @@ fun InfoDetailsScreen(
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically) {
                             Button(
-                                onClick = {},
+                                onClick = {
+                                },
                                 colors = ButtonDefaults.buttonColors(containerColor = primaryLight),
                                 modifier = Modifier.padding(8.dp)
                             ) {
@@ -244,7 +254,9 @@ fun InfoDetailsScreen(
                                 }
                             }
                             Button(
-                                onClick = {  },
+                                onClick = {
+                                    viewModel.showDeleteDialog()
+                                },
                                 colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
                                 modifier = Modifier.padding(8.dp)
                             ) {
@@ -261,5 +273,38 @@ fun InfoDetailsScreen(
                 }
             }
         }
+        if (viewModel.showDeleteDialog.value) {
+            AlertDialog(
+                onDismissRequest = { viewModel.hideDeleteDialog() },
+                title = {
+                    Text(text = "Confirmar eliminación")
+                },
+                text = {
+                    Text(text = "¿Estás seguro de que deseas eliminar este viaje?")
+                },
+                confirmButton = {
+                    TextButton(
+                        onClick = {
+                                viewModel.deleteTripById(trip!!.id)
+                                viewModel.hideDeleteDialog()
+                                Toast.makeText(context, "Viaje eliminado", Toast.LENGTH_SHORT).show()
+                                navController.popBackStack()
+
+                        }
+                    ) {
+                        Text(text = "Eliminar")
+                    }
+                },
+                dismissButton = {
+                    TextButton(
+                        onClick = { viewModel.hideDeleteDialog()  }
+                    ) {
+                        Text(text = "Cancelar")
+                    }
+                }
+            )
+        }
+
     }
+
 }
