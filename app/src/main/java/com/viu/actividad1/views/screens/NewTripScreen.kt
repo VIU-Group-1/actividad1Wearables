@@ -36,6 +36,7 @@ import androidx.navigation.NavController
 import com.example.compose.tertiaryLight
 import com.viu.actividad1.R
 import com.viu.actividad1.domain.TripEntity
+import com.viu.actividad1.views.components.FormatEuro
 import com.viu.actividad1.views.components.ShowCalendar
 import com.viu.actividad1.views.viewmodels.NewTripViewModel
 import java.util.Date
@@ -126,7 +127,9 @@ fun NewTripScreen(
                 )
             }
             var photoUrl by remember { mutableStateOf(TextFieldValue(tripToEdit?.photoUrl ?: "")) }
-            var cost by remember { mutableStateOf(TextFieldValue(tripToEdit?.cost.toString())) }
+            var cost by remember { mutableStateOf(tripToEdit?.cost?.toString() ?: "") }
+            // En cost guardamos el dato visual y en rawcost el dato sin formato
+            var rawCost by remember { mutableStateOf(tripToEdit?.cost ?: 0.0) }
             LaunchedEffect(tripToEdit) {
                 tripToEdit?.let { trip ->
                     title = TextFieldValue(trip.title ?: "")
@@ -140,8 +143,9 @@ fun NewTripScreen(
                     description = TextFieldValue(trip.description ?: "")
                     photoUrl = TextFieldValue(trip.photoUrl ?: "")
 
-                    // Convertir el coste a String
-                    cost = TextFieldValue(trip.cost.toString())
+                    // En cost convertimos a texto con el formato que queremos mostrar en pantalla
+                    rawCost = trip.cost ?: 0.0
+                    cost = String.format("%.2f", rawCost)
                 } ?: run {
                     departureDate = Date()
                     returnDate = Date()
@@ -196,8 +200,13 @@ fun NewTripScreen(
             )
             TextField(
                 value = cost,
-                onValueChange = { cost = it },
-                label = { Text("Coste") },
+                onValueChange = { input ->
+                    // Eliminamos todo lo que no sea un punto decimal
+                    val sanitizedInput = input.replace("[^\\d.]".toRegex(), "")
+                    cost = sanitizedInput
+                    rawCost = sanitizedInput.toDoubleOrNull() ?: 0.0
+                },
+                label = { Text("Coste (€)") },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 25.dp, vertical = 8.dp)
@@ -205,7 +214,7 @@ fun NewTripScreen(
             Spacer(modifier = Modifier.weight(1f))
             Button(
                 onClick = {
-                    val costValue = cost.text.toDoubleOrNull()
+                    val costValue = cost.toDoubleOrNull()
                     if (costValue != null) {
                         if (tripToEdit == null) {
                             viewModel.addTrip(
