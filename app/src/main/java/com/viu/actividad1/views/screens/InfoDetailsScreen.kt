@@ -208,14 +208,17 @@ fun InfoDetailsScreen(
                                     color = tertiaryLight
                                 )
                             )
-                            Text(
-                                text = trip!!.description,
-                                modifier = Modifier.padding(top = 16.dp),
-                                style = TextStyle(
-                                    fontSize = 20.sp,
-                                    color = Color.Black
+
+                            trip?.review?.let {
+                                Text(
+                                    text = it,
+                                    modifier = Modifier.padding(top = 16.dp),
+                                    style = TextStyle(
+                                        fontSize = 20.sp,
+                                        color = Color.Black
+                                    )
                                 )
-                            )
+                            }
                         }
                     }
 
@@ -248,7 +251,39 @@ fun InfoDetailsScreen(
                             )
                         }
                     }
-
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(bottom = 10.dp),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            trip!!.review?.let {
+                                Text(
+                                    text = stringResource(R.string.rate) + ": " + trip!!.punctuation.toString() + "⭐",
+                                    style = TextStyle(
+                                        fontSize = 22.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = tertiaryLight
+                                    )
+                                )
+                            }
+                            trip!!.review?.let {
+                                Text(
+                                    text = it,
+                                    modifier = Modifier.padding(top = 16.dp),
+                                    style = TextStyle(
+                                        fontSize = 20.sp,
+                                        color = Color.Black
+                                    )
+                                )
+                            }
+                        }
+                    }
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()

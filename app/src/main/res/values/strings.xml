@@ -10,4 +10,5 @@
     <string name="done">Realizado</string>
     <string name="cancel">Cancelar</string>
     <string name="detailstitle">Detalles del viaje</string>
+    <string name="rate">Valoración</string>
 </resources>

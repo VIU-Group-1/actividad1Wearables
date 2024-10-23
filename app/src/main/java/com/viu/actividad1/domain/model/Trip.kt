@@ -15,7 +15,8 @@ data class Trip(
     val photoUrl: String,
     val cost: Double,
     val completed: Boolean,
-    val punctuation: Int?
+    val punctuation: Int?,
+    val review: String?,
 ) {
     companion object {
         fun fromEntity(entity: TripEntity): Trip {
@@ -30,7 +31,8 @@ data class Trip(
                 photoUrl = entity.photoUrl,
                 cost = entity.cost,
                 completed = entity.completed,
-                punctuation = entity.punctuation
+                punctuation = entity.punctuation,
+                review = entity.review,
             )
         }
     }

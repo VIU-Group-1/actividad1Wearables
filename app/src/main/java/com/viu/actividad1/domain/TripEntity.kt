@@ -17,7 +17,8 @@ data class TripEntity(
     val photoUrl: String,
     val cost: Double,
     var completed: Boolean,
-    val punctuation: Int?
+    val punctuation: Int?,
+    val review: String?
 ) {
     // Convertir Long a Date
     fun getDepartureDateAsDate(): Date {

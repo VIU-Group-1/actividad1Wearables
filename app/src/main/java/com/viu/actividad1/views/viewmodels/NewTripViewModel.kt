@@ -25,7 +25,8 @@ class NewTripViewModel(val repository: TripRepository) : ViewModel() {
         photoUrl: String,
         cost: Double,
         completed: Boolean,
-        punctuation: Int?
+        punctuation: Int?,
+        review: String?
     ) {
 
         viewModelScope.launch {
@@ -40,7 +41,8 @@ class NewTripViewModel(val repository: TripRepository) : ViewModel() {
                     photoUrl = photoUrl,
                     cost = cost,
                     completed = completed,
-                    punctuation = punctuation
+                    punctuation = punctuation,
+                    review = review
                 )
                 repository.insertTrip(newTrip)
                 _insertStatus.value = InsertStatus.Inserted("Viaje agregado correctamente")
@@ -65,7 +67,8 @@ class NewTripViewModel(val repository: TripRepository) : ViewModel() {
         photoUrl: String,
         cost: Double,
         completed: Boolean,
-        punctuation: Int?
+        punctuation: Int?,
+        review: String?
     ) {
         viewModelScope.launch {
             try {
@@ -80,7 +83,8 @@ class NewTripViewModel(val repository: TripRepository) : ViewModel() {
                     photoUrl = photoUrl,
                     cost = cost,
                     completed = completed,
-                    punctuation = punctuation
+                    punctuation = punctuation,
+                    review = review
                 )
                 repository.updateTrip(updatedTrip)
                 _insertStatus.value = InsertStatus.Inserted("Viaje insertado correctamente")

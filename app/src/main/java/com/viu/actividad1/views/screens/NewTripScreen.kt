@@ -218,6 +218,7 @@ fun NewTripScreen(
                                 photoUrl.text,
                                 costValue,
                                 false,
+                                null,
                                 null
                             )
                         } else {
@@ -232,7 +233,8 @@ fun NewTripScreen(
                                 photoUrl.text,
                                 costValue,
                                 completed = false,
-                                punctuation = null
+                                punctuation = null,
+                                review = null
                             )
                         }
                         navController.navigate(Screen.ListScreen.route)
