@@ -242,7 +242,8 @@ fun InfoDetailsScreen(
                                 )
                             )
                             Text(
-                                text = trip!!.cost.toString() + "€",
+                                //Mostrar coste con 2 decimales
+                                text = String.format("%.2f€", trip!!.cost),
                                 modifier = Modifier.padding(top = 16.dp),
                                 style = TextStyle(
                                     fontSize = 20.sp,
