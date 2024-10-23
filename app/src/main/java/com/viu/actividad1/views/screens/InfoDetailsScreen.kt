@@ -294,6 +294,7 @@ fun InfoDetailsScreen(
                     ) {
                         Button(
                             onClick = {
+                                navController.navigate(Screen.RateTripScreen .route+ "/${id}")
                             },
                             colors = ButtonDefaults.buttonColors(containerColor = primaryLight),
                             modifier = Modifier.padding(8.dp)
