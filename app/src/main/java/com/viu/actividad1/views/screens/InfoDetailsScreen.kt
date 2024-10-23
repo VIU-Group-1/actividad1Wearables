@@ -47,7 +47,6 @@ import com.example.compose.primaryLight
 import com.example.compose.tertiaryLight
 import com.viu.actividad1.R
 import com.viu.actividad1.domain.model.Trip
-import com.viu.actividad1.views.components.FormatEuro
 import com.viu.actividad1.views.viewmodels.InfoDetailsViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -240,8 +239,7 @@ fun InfoDetailsScreen(
                                 )
                             )
                             Text(
-                                //Mostrar coste con 2 decimales
-                                text = FormatEuro(trip!!.cost),
+                                text = trip!!.cost.toString() + "€",
                                 modifier = Modifier.padding(top = 16.dp),
                                 style = TextStyle(
                                     fontSize = 20.sp,
