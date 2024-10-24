@@ -10,11 +10,12 @@ import com.viu.actividad1.domain.model.Trip
 import com.viu.actividad1.domain.model.UpdateStatus
 import kotlinx.coroutines.launch
 
-// View model para la creacion de viajes
+// View model para la valoración de viajes
 class RateTripViewModel(val repository: TripRepository) : ViewModel() {
     private val _updatedStatus = MutableLiveData<UpdateStatus>()
     val updateStatus: LiveData<UpdateStatus> get() = _updatedStatus
 
+    // Función de valoración de viaje
     fun rateTrip(
         trip: Trip?,
         punctuation: Int?,

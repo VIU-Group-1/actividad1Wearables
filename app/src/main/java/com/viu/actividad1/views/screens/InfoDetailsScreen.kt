@@ -292,6 +292,7 @@ fun InfoDetailsScreen(
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+                        // Botón para completar viaje y pasar a la pantalla de valoración
                         Button(
                             onClick = {
                                 navController.navigate(Screen.RateTripScreen .route+ "/${id}")
@@ -315,6 +316,7 @@ fun InfoDetailsScreen(
                                 )
                             }
                         }
+                        // Botón para cancelar viaje
                         Button(
                             onClick = {
                                 viewModel.showDeleteDialog()
@@ -340,6 +342,7 @@ fun InfoDetailsScreen(
                 }
             }
         }
+        // Confirmación de eliminación de viaje
         if (viewModel.showDeleteDialog.value) {
             AlertDialog(
                 onDismissRequest = { viewModel.hideDeleteDialog() },

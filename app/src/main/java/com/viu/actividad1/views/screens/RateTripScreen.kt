@@ -44,7 +44,7 @@ import com.viu.actividad1.R
 import com.viu.actividad1.domain.model.Trip
 import com.viu.actividad1.views.viewmodels.RateTripViewModel
 
-// Pantalla para la valoracion de viajes
+// Pantalla para la valoración de viajes
 @Composable
 fun RateTripScreen(
     navController: NavController,
@@ -59,13 +59,13 @@ fun RateTripScreen(
     }
 
     Scaffold(
-
     ) { contentPadding ->
 
         Column(
             modifier = Modifier.padding(contentPadding),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // Botón de atrás y título de pantalla
             Row(
                 modifier = Modifier
                     .padding(10.dp)
@@ -121,6 +121,7 @@ fun RateTripScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 25.dp, vertical = 8.dp)
             ) {
+                // Cuadro de texto para comentar el viaje
                 TextField(
                     value = comment,
                     onValueChange = {
@@ -142,6 +143,7 @@ fun RateTripScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Checkbox valoración
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -155,6 +157,7 @@ fun RateTripScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Valoración con estrellas
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -175,6 +178,7 @@ fun RateTripScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Botón para enviar valoración
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
@@ -192,7 +196,7 @@ fun RateTripScreen(
                             imageVector = Icons.Filled.Check,
                             contentDescription = "Tick",
                             tint = Color.White
-                        ) // Ícono de tick
+                        ) // Icono de tick
                         Text(
                             text = stringResource(R.string.send),
                             modifier = Modifier.padding(start = 8.dp),
