@@ -210,7 +210,7 @@ fun InfoDetailsScreen(
                                 )
                             )
 
-                            trip?.review?.let {
+                            trip?.description?.let {
                                 Text(
                                     text = it,
                                     modifier = Modifier.padding(top = 16.dp),
@@ -296,7 +296,7 @@ fun InfoDetailsScreen(
                         // Botón para completar viaje y pasar a la pantalla de valoración
                         Button(
                             onClick = {
-                                navController.navigate(Screen.RateTripScreen .route+ "/${id}")
+                                navController.navigate(Screen.RateTripScreen.route + "/${id}")
                             },
                             colors = ButtonDefaults.buttonColors(containerColor = primaryLight),
                             modifier = Modifier.padding(8.dp)
