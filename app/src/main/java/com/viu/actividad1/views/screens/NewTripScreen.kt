@@ -40,7 +40,7 @@ import com.viu.actividad1.views.components.ShowCalendar
 import com.viu.actividad1.views.viewmodels.NewTripViewModel
 import java.util.Date
 
-// Pantalla para la creacion de los viajes
+// Pantalla para la creación y edición de los viajes
 @Composable
 fun NewTripScreen(
     navController: NavController,
@@ -55,9 +55,6 @@ fun NewTripScreen(
     var returnDate by remember {
         mutableStateOf(Date())
     }
-    var newDate by remember {
-        mutableStateOf(tripToEdit?.getDepartureDateAsDate() ?: Date())
-    }
 
     Scaffold(
 
@@ -67,6 +64,7 @@ fun NewTripScreen(
             modifier = Modifier.padding(contentPadding),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // Botón Atrás
             Row(
                 modifier = Modifier
                     .padding(10.dp)
@@ -85,6 +83,7 @@ fun NewTripScreen(
                     tint = tertiaryLight
                 )
             }
+            //Mostrar Crear o Editar viaje, según estemos editando o insertando un nuevo viaje
             val titleResId = if (tripToEdit == null) {
                 R.string.newTrip
             } else {
@@ -129,6 +128,7 @@ fun NewTripScreen(
             var cost by remember { mutableStateOf(tripToEdit?.cost?.toString() ?: "") }
             // En cost guardamos el dato visual y en rawcost el dato sin formato
             var rawCost by remember { mutableStateOf(tripToEdit?.cost ?: 0.0) }
+            //Observamos los datos del viaje a editar
             LaunchedEffect(tripToEdit) {
                 tripToEdit?.let { trip ->
                     title = TextFieldValue(trip.title ?: "")
@@ -146,11 +146,12 @@ fun NewTripScreen(
                     rawCost = trip.cost ?: 0.0
                     cost = String.format("%.2f", rawCost)
                 } ?: run {
+                    //Si el viaje fuera nulo, se asignará la fecha del día
                     departureDate = Date()
                     returnDate = Date()
                 }
             }
-
+            //Estructura del formulario
             OutlinedTextField(
                 value = title,
                 onValueChange = { title = it },
@@ -210,6 +211,7 @@ fun NewTripScreen(
                     .padding(horizontal = 25.dp, vertical = 8.dp)
             )
             Spacer(modifier = Modifier.weight(1f))
+            //Mostrar botón Actualizar o Guardar viaje según si es un viaje nuevo o estamos editándolo
             Button(
                 onClick = {
                     val costValue = cost.toDoubleOrNull()

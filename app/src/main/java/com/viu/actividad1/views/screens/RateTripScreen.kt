@@ -59,8 +59,7 @@ fun RateTripScreen(
         trip = viewModel.getTripById(id)
     }
 
-    Scaffold(
-    ) { contentPadding ->
+    Scaffold() { contentPadding ->
 
         Column(
             modifier = Modifier.padding(contentPadding),
