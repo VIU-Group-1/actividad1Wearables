@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Luggage
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -152,7 +153,7 @@ fun NewTripScreen(
                 }
             }
 
-            TextField(
+            OutlinedTextField(
                 value = title,
                 onValueChange = { title = it },
                 label = { Text("Título del viaje") },
@@ -160,7 +161,7 @@ fun NewTripScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 25.dp, vertical = 8.dp)
             )
-            TextField(
+            OutlinedTextField(
                 value = city,
                 onValueChange = { city = it },
                 label = { Text("Ciudad") },
@@ -168,7 +169,7 @@ fun NewTripScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 25.dp, vertical = 8.dp)
             )
-            TextField(
+            OutlinedTextField(
                 value = country,
                 onValueChange = { country = it },
                 label = { Text("País") },
@@ -182,7 +183,7 @@ fun NewTripScreen(
             ShowCalendar("Fecha de regreso", returnDate) { newDate ->
                 returnDate = newDate
             }
-            TextField(
+            OutlinedTextField(
                 value = description,
                 onValueChange = { description = it },
                 label = { Text("Descripción") },
@@ -190,7 +191,7 @@ fun NewTripScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 25.dp, vertical = 8.dp)
             )
-            TextField(
+            OutlinedTextField(
                 value = photoUrl,
                 onValueChange = { photoUrl = it },
                 label = { Text("Foto") },
@@ -198,7 +199,7 @@ fun NewTripScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 25.dp, vertical = 8.dp)
             )
-            TextField(
+            OutlinedTextField(
                 value = cost,
                 onValueChange = { input ->
                     // Eliminamos todo lo que no sea un punto decimal

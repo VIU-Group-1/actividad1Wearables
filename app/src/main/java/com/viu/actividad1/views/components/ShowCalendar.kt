@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -75,7 +76,7 @@ fun ShowCalendar(text: String, selectedDate: Date, onDateSelected: (Date) -> Uni
         verticalAlignment = Alignment.CenterVertically,
 
         ) {
-        TextField(
+        OutlinedTextField(
             value = dateText,
             onValueChange = {},
             label = { Text(text) },
