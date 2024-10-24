@@ -100,6 +100,7 @@ fun ListTripsScreen(
     }
 }
 
+// Funcion para formatear las fechas
 fun formatDate(date: java.util.Date): String {
     val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
     return dateFormat.format(date)

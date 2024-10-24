@@ -28,12 +28,14 @@ import com.viu.actividad1.views.screens.ListTripsScreen
 import com.viu.actividad1.views.screens.NewTripScreen
 import com.viu.actividad1.views.screens.RateTripScreen
 import com.viu.actividad1.views.screens.Screen
-import com.viu.actividad1.views.viewmodels.RateTripViewModel
 import com.viu.actividad1.views.viewmodels.InfoDetailsViewModel
 import com.viu.actividad1.views.viewmodels.NewTripViewModel
+import com.viu.actividad1.views.viewmodels.RateTripViewModel
 import com.viu.actividad1.views.viewmodels.TripListViewModel
 
+// Clase principal
 class MainActivity : ComponentActivity() {
+    // Inicialización BD
     private val db by lazy {
         Room.databaseBuilder(
             applicationContext,
@@ -41,6 +43,7 @@ class MainActivity : ComponentActivity() {
             TripDatabase.DATABASE_NAME
         ).build()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -53,23 +56,23 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = Screen.ListScreen.route,
                         modifier = Modifier.padding(innerPadding),
-                    ){
-                        composable(Screen.ListScreen.route){
+                    ) {
+                        composable(Screen.ListScreen.route) {
                             //Create viewmodel and dao
                             val tripListViewModel = TripListViewModel(TripRepository(db.dao));
                             //Call list component
-                            ListTripsScreen(navController,tripListViewModel);
+                            ListTripsScreen(navController, tripListViewModel);
                         }
 
                         composable(
                             route = "${Screen.NewTripScreen.route}/{tripId}",
-                            arguments = listOf(navArgument("tripId") { type = NavType.IntType})
+                            arguments = listOf(navArgument("tripId") { type = NavType.IntType })
                         ) { backStackEntry ->
                             val tripId = backStackEntry.arguments?.getInt("tripId")
                             val newTripViewModel = NewTripViewModel(TripRepository(db.dao))
                             var tripToEdit by remember { mutableStateOf<TripEntity?>(null) }
                             LaunchedEffect(tripId) {
-                                if(tripId != null) {
+                                if (tripId != null) {
                                     tripId?.let {
                                         tripToEdit = newTripViewModel.getTripById(it)
                                     }
@@ -81,29 +84,31 @@ class MainActivity : ComponentActivity() {
                             //Create viewmodel and dao
                             val newTripViewModel = NewTripViewModel(TripRepository(db.dao));
                             //Call list component
-                            NewTripScreen(navController,newTripViewModel);
+                            NewTripScreen(navController, newTripViewModel);
                         }
-                        composable(route = "${Screen.RateTripScreen.route}/{tripId}",
-                            arguments = listOf(navArgument("tripId") { type = NavType.IntType})
-                        ) { backStackEntry->
+                        composable(
+                            route = "${Screen.RateTripScreen.route}/{tripId}",
+                            arguments = listOf(navArgument("tripId") { type = NavType.IntType })
+                        ) { backStackEntry ->
                             val tripId = backStackEntry.arguments?.getInt("tripId")
                             //Create viewmodel and dao
                             val rateTripViewModel = RateTripViewModel(TripRepository(db.dao));
                             //Call list component
                             if (tripId != null) {
-                                RateTripScreen(navController,tripId, rateTripViewModel)
+                                RateTripScreen(navController, tripId, rateTripViewModel)
                             };
                         }
-                        composable("${Screen.DetailsTripScreen.route}/{tripId}",
-                            arguments = listOf(navArgument("tripId") { type = NavType.IntType})
-                        ) { backStackEntry->
+                        composable(
+                            "${Screen.DetailsTripScreen.route}/{tripId}",
+                            arguments = listOf(navArgument("tripId") { type = NavType.IntType })
+                        ) { backStackEntry ->
                             val tripId = backStackEntry.arguments?.getInt("tripId")
 
                             //Create viewmodel and dao
                             val infoDetailsViewModel = InfoDetailsViewModel(TripRepository(db.dao));
                             //Call list component
                             if (tripId != null) {
-                                InfoDetailsScreen(navController,tripId, infoDetailsViewModel)
+                                InfoDetailsScreen(navController, tripId, infoDetailsViewModel)
                             };
                         }
                     }

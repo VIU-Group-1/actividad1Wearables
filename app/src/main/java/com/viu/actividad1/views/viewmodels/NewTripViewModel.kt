@@ -15,6 +15,7 @@ class NewTripViewModel(val repository: TripRepository) : ViewModel() {
     private val _insertStatus = MutableLiveData<InsertStatus>()
     val insertStatus: LiveData<InsertStatus> get() = _insertStatus
 
+    // Añadir un viaje
     fun addTrip(
         title: String,
         city: String,
@@ -52,10 +53,12 @@ class NewTripViewModel(val repository: TripRepository) : ViewModel() {
         }
     }
 
+    // Obtener un viaje por ID
     suspend fun getTripById(id: Int): TripEntity? {
         return repository.getTripById(id)
     }
 
+    // Actualizar un viaje
     fun updateTrip(
         id: Int,
         title: String,

@@ -17,7 +17,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -37,7 +36,6 @@ import androidx.navigation.NavController
 import com.example.compose.tertiaryLight
 import com.viu.actividad1.R
 import com.viu.actividad1.domain.TripEntity
-import com.viu.actividad1.views.components.FormatEuro
 import com.viu.actividad1.views.components.ShowCalendar
 import com.viu.actividad1.views.viewmodels.NewTripViewModel
 import java.util.Date
