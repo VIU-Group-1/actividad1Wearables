@@ -49,18 +49,18 @@ fun TripRow(trip: Trip, navController: NavController) {
     val subtextColor = if (trip.completed) onPrimaryLight else Color.Gray
 
     Row(
-    modifier = Modifier
-    .height(100.dp)
-    .fillMaxWidth() // Aseguramos que ocupe todo el ancho de la pantalla
-    .padding(8.dp)
-    .clip(RoundedCornerShape(16.dp))  // Esquinas redondeadas
-    .background(backgroundColor)
+        modifier = Modifier
+            .height(100.dp)
+            .fillMaxWidth()
+            .padding(8.dp)
+            .clip(RoundedCornerShape(16.dp))  // Esquinas redondeadas
+            .background(backgroundColor)
 
-    .clickable {
-        navController.navigate(Screen.DetailsTripScreen.route + "/${trip.id}")
-    },
-    verticalAlignment = Alignment.CenterVertically
-    ){
+            .clickable {
+                navController.navigate(Screen.DetailsTripScreen.route + "/${trip.id}")
+            },
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Column() {
             Image(
                 painter = rememberAsyncImagePainter(trip.photoUrl),
@@ -101,7 +101,7 @@ fun TripRow(trip: Trip, navController: NavController) {
             )
 
         }
-        if(!trip.completed) {
+        if (!trip.completed) {
             Column(
                 modifier = Modifier
                     .weight(0.2f)
@@ -129,7 +129,7 @@ fun TripRow(trip: Trip, navController: NavController) {
 
 
             }
-        }else {
+        } else {
             Column(
                 modifier = Modifier
                     .weight(0.2f)
@@ -139,9 +139,11 @@ fun TripRow(trip: Trip, navController: NavController) {
                 horizontalAlignment = Alignment.End,
                 verticalArrangement = Arrangement.Center
             ) {
-                Row(    verticalAlignment = Alignment.CenterVertically,
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxWidth()){
+                    modifier = Modifier.fillMaxWidth()
+                ) {
                     Text(
                         text = trip.punctuation.toString(),
                         maxLines = 1,

@@ -14,9 +14,9 @@ import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Luggage
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -36,7 +36,6 @@ import androidx.navigation.NavController
 import com.example.compose.tertiaryLight
 import com.viu.actividad1.R
 import com.viu.actividad1.domain.TripEntity
-import com.viu.actividad1.views.components.FormatEuro
 import com.viu.actividad1.views.components.ShowCalendar
 import com.viu.actividad1.views.viewmodels.NewTripViewModel
 import java.util.Date
@@ -152,7 +151,7 @@ fun NewTripScreen(
                 }
             }
 
-            TextField(
+            OutlinedTextField(
                 value = title,
                 onValueChange = { title = it },
                 label = { Text("Título del viaje") },
@@ -160,7 +159,7 @@ fun NewTripScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 25.dp, vertical = 8.dp)
             )
-            TextField(
+            OutlinedTextField(
                 value = city,
                 onValueChange = { city = it },
                 label = { Text("Ciudad") },
@@ -168,7 +167,7 @@ fun NewTripScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 25.dp, vertical = 8.dp)
             )
-            TextField(
+            OutlinedTextField(
                 value = country,
                 onValueChange = { country = it },
                 label = { Text("País") },
@@ -182,7 +181,7 @@ fun NewTripScreen(
             ShowCalendar("Fecha de regreso", returnDate) { newDate ->
                 returnDate = newDate
             }
-            TextField(
+            OutlinedTextField(
                 value = description,
                 onValueChange = { description = it },
                 label = { Text("Descripción") },
@@ -190,7 +189,7 @@ fun NewTripScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 25.dp, vertical = 8.dp)
             )
-            TextField(
+            OutlinedTextField(
                 value = photoUrl,
                 onValueChange = { photoUrl = it },
                 label = { Text("Foto") },
@@ -198,7 +197,7 @@ fun NewTripScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 25.dp, vertical = 8.dp)
             )
-            TextField(
+            OutlinedTextField(
                 value = cost,
                 onValueChange = { input ->
                     val sanitizedInput = input.replace("[^\\d.]".toRegex(), "")
@@ -226,6 +225,7 @@ fun NewTripScreen(
                                 photoUrl.text,
                                 costValue,
                                 false,
+                                null,
                                 null
                             )
                         } else {
@@ -240,7 +240,8 @@ fun NewTripScreen(
                                 photoUrl.text,
                                 costValue,
                                 completed = false,
-                                punctuation = null
+                                punctuation = null,
+                                review = null
                             )
                         }
                         navController.navigate(Screen.ListScreen.route)

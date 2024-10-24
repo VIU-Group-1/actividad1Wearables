@@ -15,6 +15,7 @@ class NewTripViewModel(val repository: TripRepository) : ViewModel() {
     private val _insertStatus = MutableLiveData<InsertStatus>()
     val insertStatus: LiveData<InsertStatus> get() = _insertStatus
 
+    // Añadir un viaje
     fun addTrip(
         title: String,
         city: String,
@@ -25,7 +26,8 @@ class NewTripViewModel(val repository: TripRepository) : ViewModel() {
         photoUrl: String,
         cost: Double,
         completed: Boolean,
-        punctuation: Int?
+        punctuation: Int?,
+        review: String?
     ) {
 
         viewModelScope.launch {
@@ -40,7 +42,8 @@ class NewTripViewModel(val repository: TripRepository) : ViewModel() {
                     photoUrl = photoUrl,
                     cost = cost,
                     completed = completed,
-                    punctuation = punctuation
+                    punctuation = punctuation,
+                    review = review
                 )
                 repository.insertTrip(newTrip)
                 _insertStatus.value = InsertStatus.Inserted("Viaje agregado correctamente")
@@ -50,10 +53,12 @@ class NewTripViewModel(val repository: TripRepository) : ViewModel() {
         }
     }
 
+    // Obtener un viaje por ID
     suspend fun getTripById(id: Int): TripEntity? {
         return repository.getTripById(id)
     }
 
+    // Actualizar un viaje
     fun updateTrip(
         id: Int,
         title: String,
@@ -65,7 +70,8 @@ class NewTripViewModel(val repository: TripRepository) : ViewModel() {
         photoUrl: String,
         cost: Double,
         completed: Boolean,
-        punctuation: Int?
+        punctuation: Int?,
+        review: String?
     ) {
         viewModelScope.launch {
             try {
@@ -80,7 +86,8 @@ class NewTripViewModel(val repository: TripRepository) : ViewModel() {
                     photoUrl = photoUrl,
                     cost = cost,
                     completed = completed,
-                    punctuation = punctuation
+                    punctuation = punctuation,
+                    review = review
                 )
                 repository.updateTrip(updatedTrip)
                 _insertStatus.value = InsertStatus.Inserted("Viaje insertado correctamente")

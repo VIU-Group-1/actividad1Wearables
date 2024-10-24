@@ -10,8 +10,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -66,7 +66,7 @@ fun ShowCalendar(text: String, selectedDate: Date, onDateSelected: (Date) -> Uni
                 // Actualiza la fecha y el texto
                 date = newDate
                 dateText = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(newDate)
-                onDateSelected(newDate) // Llama al callback con la nueva fecha
+                onDateSelected(newDate)
             }, year, month, day
         ).show()
     }
@@ -75,7 +75,7 @@ fun ShowCalendar(text: String, selectedDate: Date, onDateSelected: (Date) -> Uni
         verticalAlignment = Alignment.CenterVertically,
 
         ) {
-        TextField(
+        OutlinedTextField(
             value = dateText,
             onValueChange = {},
             label = { Text(text) },

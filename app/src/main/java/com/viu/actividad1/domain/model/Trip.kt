@@ -3,7 +3,7 @@ package com.viu.actividad1.domain.model;
 import com.viu.actividad1.domain.TripEntity
 import java.util.Date;
 
-// Modelo de un viaje
+// Clase para modelar un viaje
 data class Trip(
     val id: Int = 0,
     val title: String,
@@ -15,9 +15,11 @@ data class Trip(
     val photoUrl: String,
     val cost: Double,
     val completed: Boolean,
-    val punctuation: Int?
+    val punctuation: Int?,
+    val review: String?,
 ) {
     companion object {
+        // Transformación de entidad a modelo de un viaje
         fun fromEntity(entity: TripEntity): Trip {
             return Trip(
                 id = entity.id,
@@ -30,7 +32,8 @@ data class Trip(
                 photoUrl = entity.photoUrl,
                 cost = entity.cost,
                 completed = entity.completed,
-                punctuation = entity.punctuation
+                punctuation = entity.punctuation,
+                review = entity.review,
             )
         }
     }

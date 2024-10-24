@@ -30,6 +30,7 @@ class TripListViewModel(val repository: TripRepository) : ViewModel() {
         }
     }
 
+    // Cargar los viajes
     private suspend fun loadTrips(pastEvents: Boolean): List<Trip> {
         job?.cancel()
 
@@ -43,9 +44,10 @@ class TripListViewModel(val repository: TripRepository) : ViewModel() {
         return getTrips(pastEvents);
     }
 
-    fun getTrips(pastEvents: Boolean): List<Trip> {
+    // Obtener los viajes en función de si están completados o no
+    fun getTrips(completed: Boolean): List<Trip> {
         return _trips.value.filter { trip ->
-            trip.completed == pastEvents
+            trip.completed == completed
         }
     }
 

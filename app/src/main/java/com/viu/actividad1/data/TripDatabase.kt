@@ -7,10 +7,11 @@ import com.viu.actividad1.domain.TripEntity
 
 //Clase para la creación de base de datos de la biblioteca Room
 @Database(entities = [TripEntity::class], version = 1)
-abstract class TripDatabase: RoomDatabase() {
+abstract class TripDatabase : RoomDatabase() {
     abstract val dao: TripDao;
 
     companion object {
+        //Nombre de la base de datos
         const val DATABASE_NAME = "trips.db"
     }
 }

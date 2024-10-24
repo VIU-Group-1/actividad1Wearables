@@ -1,15 +1,15 @@
 package com.viu.actividad1.data.DAO
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import androidx.room.Delete
 import com.viu.actividad1.domain.TripEntity
 import kotlinx.coroutines.flow.Flow
 
-//Clase DAO para los viajes que permite seguir el patron
+//Clase DAO para los viajes que permite seguir el patron DAO junto con los repositorios
 @Dao
 interface TripDao {
 
