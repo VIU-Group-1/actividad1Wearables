@@ -106,7 +106,7 @@ class NewTripViewModel(val repository: TripRepository) : ViewModel() {
         }
     }
 
-
+    // Obtener paises de la API
     fun fetchCountries() {
         viewModelScope.launch {
             val call = RetrofitInstance.api.getCountries()
@@ -129,6 +129,7 @@ class NewTripViewModel(val repository: TripRepository) : ViewModel() {
         }
     }
 
+    // Comprobar si el pais introducido es válido segun la API
     fun isCountryValid(country: String): Boolean {
         return countriesLiveData.value?.any {
             it.translations?.get("spa")?.common.equals(country, ignoreCase = true)
