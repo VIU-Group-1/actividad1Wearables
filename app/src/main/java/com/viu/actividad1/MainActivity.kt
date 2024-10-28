@@ -44,9 +44,11 @@ class MainActivity : ComponentActivity() {
         ).build()
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         setContent {
             AppTheme {
                 Scaffold(modifier = Modifier.safeDrawingPadding()) { innerPadding ->
@@ -83,6 +85,7 @@ class MainActivity : ComponentActivity() {
                         composable(Screen.NewTripScreen.route) {
                             //Create viewmodel and dao
                             val newTripViewModel = NewTripViewModel(TripRepository(db.dao));
+                            newTripViewModel.fetchCountries()
                             //Call list component
                             NewTripScreen(navController, newTripViewModel);
                         }

@@ -170,7 +170,9 @@ fun NewTripScreen(
             )
             OutlinedTextField(
                 value = country,
-                onValueChange = { country = it },
+                onValueChange = {
+                    country = it
+                },
                 label = { Text("País") },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -216,37 +218,44 @@ fun NewTripScreen(
                 onClick = {
                     val costValue = cost.toDoubleOrNull()
                     if (costValue != null) {
-                        if (tripToEdit == null) {
-                            viewModel.addTrip(
-                                title.text,
-                                city.text,
-                                country.text,
-                                TripEntity.convertDateToLong(departureDate),
-                                TripEntity.convertDateToLong(returnDate),
-                                description.text,
-                                photoUrl.text,
-                                costValue,
-                                false,
-                                null,
-                                null
-                            )
+                        if (viewModel.isCountryValid(country.text)) {
+
+
+                            if (tripToEdit == null) {
+                                viewModel.addTrip(
+                                    title.text,
+                                    city.text,
+                                    country.text,
+                                    TripEntity.convertDateToLong(departureDate),
+                                    TripEntity.convertDateToLong(returnDate),
+                                    description.text,
+                                    photoUrl.text,
+                                    costValue,
+                                    false,
+                                    null,
+                                    null
+                                )
+                            } else {
+                                viewModel.updateTrip(
+                                    tripToEdit.id,
+                                    title.text,
+                                    city.text,
+                                    country.text,
+                                    TripEntity.convertDateToLong(departureDate),
+                                    TripEntity.convertDateToLong(returnDate),
+                                    description.text,
+                                    photoUrl.text,
+                                    costValue,
+                                    completed = false,
+                                    punctuation = null,
+                                    review = null
+                                )
+                            }
+                            navController.navigate(Screen.ListScreen.route)
                         } else {
-                            viewModel.updateTrip(
-                                tripToEdit.id,
-                                title.text,
-                                city.text,
-                                country.text,
-                                TripEntity.convertDateToLong(departureDate),
-                                TripEntity.convertDateToLong(returnDate),
-                                description.text,
-                                photoUrl.text,
-                                costValue,
-                                completed = false,
-                                punctuation = null,
-                                review = null
-                            )
+                            errorMessage = "El pais debe ser valido"
+                            showToast = true
                         }
-                        navController.navigate(Screen.ListScreen.route)
                     } else {
                         errorMessage = "El coste debe ser un número."
                         showToast = true
