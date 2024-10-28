@@ -128,6 +128,10 @@ fun NewTripScreen(
             var cost by remember { mutableStateOf(tripToEdit?.cost?.toString() ?: "") }
             // En cost guardamos el dato visual y en rawcost el dato sin formato
             var rawCost by remember { mutableStateOf(tripToEdit?.cost ?: 0.0) }
+
+            // Límite de textos de una línea y de varias (sólo la descripción)
+            val maxOneLineLength = 20
+            val maxDescriptionLength = 100
             //Observamos los datos del viaje a editar
             LaunchedEffect(tripToEdit) {
                 tripToEdit?.let { trip ->
@@ -154,29 +158,36 @@ fun NewTripScreen(
             //Estructura del formulario
             OutlinedTextField(
                 value = title,
-                onValueChange = { title = it },
+                onValueChange = {
+                    if (it.text.length <= maxOneLineLength)
+                        title = it },
                 label = { Text("Título del viaje") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 25.dp, vertical = 8.dp)
+                    .padding(horizontal = 25.dp, vertical = 8.dp),
+                singleLine = true
             )
             OutlinedTextField(
                 value = city,
-                onValueChange = { city = it },
+                onValueChange = {
+                    if (it.text.length <= maxOneLineLength) city = it },
                 label = { Text("Ciudad") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 25.dp, vertical = 8.dp)
+                    .padding(horizontal = 25.dp, vertical = 8.dp),
+                singleLine = true
             )
             OutlinedTextField(
                 value = country,
                 onValueChange = {
+                    if (it.text.length <= maxOneLineLength)
                     country = it
                 },
                 label = { Text("País") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 25.dp, vertical = 8.dp)
+                    .padding(horizontal = 25.dp, vertical = 8.dp),
+                singleLine = true
             )
             ShowCalendar("Fecha de comienzo", departureDate) { newDate ->
                 departureDate = newDate
@@ -186,11 +197,13 @@ fun NewTripScreen(
             }
             OutlinedTextField(
                 value = description,
-                onValueChange = { description = it },
+                onValueChange = {
+                    if (it.text.length <= maxDescriptionLength)
+                        description = it },
                 label = { Text("Descripción") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 25.dp, vertical = 8.dp)
+                    .padding(horizontal = 25.dp, vertical = 8.dp),
             )
             OutlinedTextField(
                 value = photoUrl,
@@ -198,68 +211,84 @@ fun NewTripScreen(
                 label = { Text("Foto") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 25.dp, vertical = 8.dp)
+                    .padding(horizontal = 25.dp, vertical = 8.dp),
+                singleLine = true
             )
             OutlinedTextField(
                 value = cost,
                 onValueChange = { input ->
                     val sanitizedInput = input.replace("[^\\d.]".toRegex(), "")
-                    cost = sanitizedInput
-                    rawCost = sanitizedInput.toDoubleOrNull() ?: 0.0
+
+                    if (sanitizedInput.length <= maxOneLineLength) {
+                        cost = sanitizedInput
+                        rawCost = sanitizedInput.toDoubleOrNull() ?: 0.0
+                    }
                 },
                 label = { Text("Coste (€)") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 25.dp, vertical = 8.dp)
+                    .padding(horizontal = 25.dp, vertical = 8.dp),
+                singleLine = true
             )
             Spacer(modifier = Modifier.weight(1f))
             //Mostrar botón Actualizar o Guardar viaje según si es un viaje nuevo o estamos editándolo
             Button(
                 onClick = {
                     val costValue = cost.toDoubleOrNull()
-                    if (costValue != null) {
-                        if (viewModel.isCountryValid(country.text)) {
+                    if (checkField(title.text) &&
+                        checkField(city.text)&&
+                        checkField(country.text)&&
+                        checkField(description.text) &&
+                        checkField(photoUrl.text)) {
+                        if (costValue != null) {
+                            if (viewModel.isCountryValid(country.text)) {
 
 
-                            if (tripToEdit == null) {
-                                viewModel.addTrip(
-                                    title.text,
-                                    city.text,
-                                    country.text,
-                                    TripEntity.convertDateToLong(departureDate),
-                                    TripEntity.convertDateToLong(returnDate),
-                                    description.text,
-                                    photoUrl.text,
-                                    costValue,
-                                    false,
-                                    null,
-                                    null
-                                )
+                                if (tripToEdit == null) {
+                                    viewModel.addTrip(
+                                        title.text,
+                                        city.text,
+                                        country.text,
+                                        TripEntity.convertDateToLong(departureDate),
+                                        TripEntity.convertDateToLong(returnDate),
+                                        description.text,
+                                        photoUrl.text,
+                                        costValue,
+                                        false,
+                                        null,
+                                        null
+                                    )
+                                } else {
+                                    viewModel.updateTrip(
+                                        tripToEdit.id,
+                                        title.text,
+                                        city.text,
+                                        country.text,
+                                        TripEntity.convertDateToLong(departureDate),
+                                        TripEntity.convertDateToLong(returnDate),
+                                        description.text,
+                                        photoUrl.text,
+                                        costValue,
+                                        completed = false,
+                                        punctuation = null,
+                                        review = null
+                                    )
+                                }
+                                navController.navigate(Screen.ListScreen.route)
                             } else {
-                                viewModel.updateTrip(
-                                    tripToEdit.id,
-                                    title.text,
-                                    city.text,
-                                    country.text,
-                                    TripEntity.convertDateToLong(departureDate),
-                                    TripEntity.convertDateToLong(returnDate),
-                                    description.text,
-                                    photoUrl.text,
-                                    costValue,
-                                    completed = false,
-                                    punctuation = null,
-                                    review = null
-                                )
+                                errorMessage = "El pais debe ser valido"
+                                showToast = true
                             }
-                            navController.navigate(Screen.ListScreen.route)
                         } else {
-                            errorMessage = "El pais debe ser valido"
+                            errorMessage = "El coste debe ser un número."
                             showToast = true
                         }
-                    } else {
-                        errorMessage = "El coste debe ser un número."
+                    }
+                    else {
+                        errorMessage = "Revisa los campos: deben tener 2 o más caracteres y no tener espacios seguidos."
                         showToast = true
                     }
+
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
@@ -271,4 +300,11 @@ fun NewTripScreen(
             showToast = false
         }
     }
+}
+
+// Condiciones que los textos deben cumplir (2 o más caracteres y no espacios consecutivos)
+fun checkField(textToCheck: String): Boolean {
+    if (textToCheck.length <= 2) return false
+    if (textToCheck.contains("  ")) return false
+    return true
 }
