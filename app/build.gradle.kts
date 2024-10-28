@@ -55,6 +55,8 @@ dependencies {
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.foundation.layout.android)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 
 
     testImplementation(libs.junit)
